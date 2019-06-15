@@ -1,0 +1,11 @@
+type Entry {
+    id: ID!
+    description: String!
+    url: String!
+}
+
+extend type Query {
+    entries(page: Int, size: Int): [Entry]
+    entryById(id: ID!): Entry
+    entriesByTagId(tagId: ID!): [Entry]
+}

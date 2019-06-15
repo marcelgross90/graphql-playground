@@ -1,0 +1,11 @@
+type Tag {
+    id: ID!
+    title: String!
+    entries: [Entry]
+}
+
+extend type Query {
+    tags(page: Int, size: Int): [Tag]
+    tagById(id: ID!): Tag
+    tagsByUserId(userId: ID!): [Tag]
+}
