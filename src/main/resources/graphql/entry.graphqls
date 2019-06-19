@@ -5,7 +5,21 @@ type Entry {
 }
 
 extend type Query {
-    entries(page: Int, size: Int): [Entry]
     entryById(id: ID!): Entry
     entriesByTagId(tagId: ID!): [Entry]
 }
+
+type EntryPage implements Page{
+    number: Int!
+    size: Int!
+    totalPages: Int!
+    numberOfElements: Int!
+    totalElements: Int!
+    hasNext: Boolean!
+    isLast: Boolean!
+    content: [Entry]
+}
+extend type Query {
+    entries(page: Int, size: Int): EntryPage
+}
+

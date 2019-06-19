@@ -1,6 +1,7 @@
 package rocks.marcelgross.wishlist.entry
 
-import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Page
+import rocks.marcelgross.wishlist.CustomPageImpl
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -16,5 +17,9 @@ data class EntryEntity(
 )
 
 data class EntryPage(
-    val entries: List<EntryEntity>
-) : PageImpl<EntryEntity>(entries)
+    private val page: Page<EntryEntity>
+) : CustomPageImpl(
+    page.number, page.size, page.totalPages, page.numberOfElements, page.totalElements
+) {
+    val content = page.content
+}

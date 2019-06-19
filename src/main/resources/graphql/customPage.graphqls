@@ -1,0 +1,10 @@
+interface Page {
+    number: Int!
+    size: Int!
+    totalPages: Int!
+    numberOfElements: Int!
+    totalElements: Int!
+    hasNext: Boolean!
+    isLast: Boolean!
+}
+

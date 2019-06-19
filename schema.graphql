@@ -10,8 +10,19 @@ type Entry {
     url: String!
 }
 
+type EntryPage {
+    content: [Entry]
+    hasNext: Boolean!
+    isLast: Boolean!
+    number: Int!
+    numberOfElements: Int!
+    size: Int!
+    totalElements: Int!
+    totalPages: Int!
+}
+
 type Query {
-    entries(page: Int, size: Int): [Entry]
+    entries(page: Int, size: Int): EntryPage
     entriesByTagId(tagId: ID!): [Entry]
     entryById(id: ID!): Entry
     tagById(id: ID!): Tag
