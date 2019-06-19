@@ -2,13 +2,20 @@ package rocks.marcelgross.wishlist.tag
 
 import com.coxautodev.graphql.tools.GraphQLResolver
 import org.springframework.stereotype.Component
+import rocks.marcelgross.wishlist.entry.EntryEntity
 import rocks.marcelgross.wishlist.entry.EntryRepository
-import rocks.marcelgross.wishlist.user.UserRepository
+import rocks.marcelgross.wishlist.security.UserContext
 
 @Component
 class TagResolver(
-    private val userRepository: UserRepository,
+    private val userContext: UserContext,
     private val entryRepository: EntryRepository
 ) : GraphQLResolver<TagEntity> {
-    fun entries(tag: TagEntity) = entryRepository.findAllForTag(tag.id)
+    fun entries(tag: TagEntity): List<EntryEntity> {
+        return if (userContext.roles.contains("ROLE_ADMIN")) {
+            entryRepository.findAllForTag(tag.id)
+        } else {
+            emptyList()
+        }
+    }
 }
