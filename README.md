@@ -73,6 +73,8 @@ the user-roles, `anonymous`, `user`, `admin` will get different responses.
     "data": {
         "users": [
             {
+                "id": "1",
+                "keycloakId": "keycloakId0",            
                 "email": "email0@web.de",
                 "name": "Name 0",
                 "tags": [
@@ -99,6 +101,8 @@ the user-roles, `anonymous`, `user`, `admin` will get different responses.
     "data": {
         "users": [
             {
+                "id": "1",
+                "keycloakId": "keycloakId0",
                 "email": "email0@web.de",
                 "name": "Name 0",
                 "tags": [
