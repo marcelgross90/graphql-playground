@@ -6,8 +6,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer
-import org.springframework.security.config.http.SessionCreationPolicy
 
 @Configuration
 @EnableWebSecurity
@@ -23,20 +21,16 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        super.configure(http)
-        configureHttpSecurity(http)
+        http
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/test").permitAll()
+            .antMatchers("/graphiql").permitAll()
+            .antMatchers("/subscriptions").permitAll()
+            .antMatchers("/vendor/*").permitAll()
+            .antMatchers("/graphql").permitAll()
+            .anyRequest().authenticated()
+
     }
 
-
-    companion object {
-        fun configureHttpSecurity(http: HttpSecurity): ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry {
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            return http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/graphiql").permitAll()
-                .antMatchers("/graphql").permitAll()
-                .anyRequest().authenticated()
-        }
-    }
 }
