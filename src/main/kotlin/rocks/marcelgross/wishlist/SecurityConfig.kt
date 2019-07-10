@@ -18,31 +18,31 @@ class SecurityConfig(val userRepository: UserRepository) : WebSecurityConfigurer
     @Autowired
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
         val authentication = auth.inMemoryAuthentication()
-         userRepository.findAll().forEach {
-            val roles: Array<String> =  if (it.name.startsWith("user")) arrayOf("USER") else arrayOf("ADMIN", "USER")
-             authentication.withUser(it.name)
-                    .password("{noop}${it.name}")
-                    .roles(*roles)
+        userRepository.findAll().forEach {
+            val roles: Array<String> = if (it.name.startsWith("user")) arrayOf("USER") else arrayOf("ADMIN", "USER")
+            authentication.withUser(it.name)
+                .password("{noop}${it.name}")
+                .roles(*roles)
         }
     }
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .csrf().disable()
-                .authorizeRequests()
-                /**
-                 * Resources for Graphiql must be enabled Start
-                 */
-                .antMatchers("/graphiql").permitAll()
-                .antMatchers("/subscriptions").permitAll()
-                .antMatchers("/vendor/*").permitAll()
-                /**
-                 * Resources for Graphiql must be enabled END
-                 */
-                .antMatchers("/graphql").permitAll()
-                .anyRequest().authenticated()
-                .and().httpBasic()
+            .and()
+            .csrf().disable()
+            .authorizeRequests()
+            /**
+             * Resources for Graphiql must be enabled Start
+             */
+            .antMatchers("/graphiql").permitAll()
+            .antMatchers("/subscriptions").permitAll()
+            .antMatchers("/vendor/*").permitAll()
+            /**
+             * Resources for Graphiql must be enabled END
+             */
+            .antMatchers("/graphql").permitAll()
+            .anyRequest().authenticated()
+            .and().httpBasic()
     }
 }

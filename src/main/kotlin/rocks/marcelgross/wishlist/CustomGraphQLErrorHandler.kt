@@ -2,17 +2,15 @@ package rocks.marcelgross.wishlist
 
 import graphql.ExceptionWhileDataFetching
 import graphql.GraphQLError
-import graphql.servlet.core.DefaultGraphQLErrorHandler
 import graphql.servlet.core.GenericGraphQLError
 import graphql.servlet.core.GraphQLErrorHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-class CustomGraphQLErrorHandler: GraphQLErrorHandler {
+class CustomGraphQLErrorHandler : GraphQLErrorHandler {
 
     val log = LoggerFactory.getLogger(CustomGraphQLErrorHandler::class.java)
-
 
     override fun processErrors(errors: MutableList<GraphQLError>): MutableList<GraphQLError> {
         val clientErrors = filterGraphQLErrors(errors).toMutableList()
@@ -36,7 +34,7 @@ class CustomGraphQLErrorHandler: GraphQLErrorHandler {
     }
 
     private fun filterGraphQLErrors(errors: List<GraphQLError>): List<GraphQLError> {
-        return errors//.filter { isClientError(it) }
+        return errors // .filter { isClientError(it) }
     }
 
     private fun isClientError(error: GraphQLError): Boolean {

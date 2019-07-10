@@ -28,4 +28,4 @@ fun main(args: Array<String>) {
     runApplication<WishlistApplication>(*args)
 }
 
-class ForbittenException: Exception()
+class ForbittenException : Exception()

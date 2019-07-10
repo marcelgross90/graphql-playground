@@ -10,7 +10,7 @@ import java.lang.Exception
 @Component
 @RequestScope
 class UserContextImpl(
-        private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : UserContext {
 
     override val user: UserEntity? by lazy {

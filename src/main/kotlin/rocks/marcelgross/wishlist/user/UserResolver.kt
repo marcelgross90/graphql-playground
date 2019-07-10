@@ -17,7 +17,7 @@ class UserResolver(
         return if (userContext.roles.contains("ROLE_USER")) {
             tagRepository.findAllForUser(user.id)
         } else {
-           throw ForbittenException()
+            throw ForbittenException()
         }
     }
 }
