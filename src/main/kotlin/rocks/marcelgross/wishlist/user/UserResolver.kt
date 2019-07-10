@@ -2,6 +2,7 @@ package rocks.marcelgross.wishlist.user
 
 import com.coxautodev.graphql.tools.GraphQLResolver
 import org.springframework.stereotype.Component
+import rocks.marcelgross.wishlist.ForbiddenException
 import rocks.marcelgross.wishlist.security.UserContext
 import rocks.marcelgross.wishlist.tag.TagEntity
 import rocks.marcelgross.wishlist.tag.TagRepository
@@ -16,7 +17,7 @@ class UserResolver(
         return if (userContext.roles.contains("ROLE_USER")) {
             tagRepository.findAllForUser(user.id)
         } else {
-            emptyList()
+           throw ForbiddenException()
         }
     }
 }

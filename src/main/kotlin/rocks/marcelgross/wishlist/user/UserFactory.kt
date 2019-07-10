@@ -11,11 +11,18 @@ object UserFactory {
             users.add(
                 UserEntity(
                     keycloakId = "keycloakId$i",
-                    name = "Name $i",
+                    name = "name$i",
                     email = "email$i@web.de"
                 )
             )
         }
+        users.add(
+                UserEntity(
+                        keycloakId = "keycloakId",
+                        name = "admin",
+                        email = "admin@web.de"
+                )
+        )
 
         return users
     }
