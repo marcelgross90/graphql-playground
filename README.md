@@ -24,9 +24,133 @@ After startup the server provides the following endpoints:
 
 For example queries see `cheatSheet.md`.
 
+## Authentication and Authorisation
+
+The endpoint is still accessible without login!
+But the collection-attributes `tags` for `users`, `entries` for `tags` is restricted.
+
+For this request:
+```
+{ 
+  users(page:0, size:1) {
+    id
+    keycloakId
+    email
+    name
+    tags {
+        id
+        title
+        entries {
+            id
+            description
+            url
+        }
+    }
+  }
+}
+```
+the user-roles, `anonymous`, `user`, `admin` will get different responses.
+
+###### Anonymous User:
+```json
+{
+  "data": {
+    "users": [
+      {
+        "id": "1",
+        "keycloakId": "keycloakId0",
+        "email": "email0@web.de",
+        "name": "Name 0",
+        "tags": []
+      }
+    ]
+  }
+}
+```
+###### User:
+````json
+{
+    "data": {
+        "users": [
+            {
+                "id": "1",
+                "keycloakId": "keycloakId0",            
+                "email": "email0@web.de",
+                "name": "Name 0",
+                "tags": [
+                    {
+                        "id": "4",
+                        "title": "Tag 4",
+                        "entries": []
+                    },
+                    {
+                        "id": "7",
+                        "title": "Tag 7",
+                        "entries": []
+                    },
+                    ...
+                ]
+            }
+        ]
+    }
+}
+````
+###### Admin:
+````json
+{
+    "data": {
+        "users": [
+            {
+                "id": "1",
+                "keycloakId": "keycloakId0",
+                "email": "email0@web.de",
+                "name": "Name 0",
+                "tags": [
+                    {
+                        "id": "4",
+                        "title": "Tag 4",
+                        "entries": [
+                            {
+                                "id": "41",
+                                "description": "Entry 60",
+                                "url": "URL 60"
+                            },
+                            {
+                                "id": "42",
+                                "description": "Entry 61",
+                                "url": "URL 61"
+                            },
+                            ...
+                        ]
+                    },
+                    {
+                        "id": "7",
+                        "title": "Tag 7",
+                        "entries": [
+                            {
+                                "id": "3",
+                                "description": "Entry 2",
+                                "url": "URL 2"
+                            }
+                        ]
+                    },
+                    ...
+                ]
+            }
+        ]
+    }
+}
+````
+
+### Existing User
+
+- User with Role `User`: user/user
+- User with Role `Admin`: admin/admin
+
+This example uses the basic authentication workflow. 
+
 ## Open Points
 
-1. Authentication and Authorisation
-2. Pagination:
+1. Pagination:
     1. Return spring page objects for paginated requests
     2. Use Cursor for pagination
