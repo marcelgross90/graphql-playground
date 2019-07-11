@@ -27,5 +27,3 @@ class WishlistApplication(
 fun main(args: Array<String>) {
     runApplication<WishlistApplication>(*args)
 }
-
-class ForbittenException : Exception()
