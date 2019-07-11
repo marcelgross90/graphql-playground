@@ -11,3 +11,4 @@ spring:
 graphql:
   servlet:
     actuator-metrics: true
+    exception-handlers-enabled: true
