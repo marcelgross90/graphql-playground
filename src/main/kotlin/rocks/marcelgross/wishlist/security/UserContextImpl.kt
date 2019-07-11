@@ -1,6 +1,7 @@
 package rocks.marcelgross.wishlist.security
 
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import org.springframework.web.context.annotation.RequestScope
 import rocks.marcelgross.wishlist.errorHandling.ForbiddenException
@@ -14,10 +15,10 @@ class UserContextImpl(
 ) : UserContext {
 
     override val user: UserEntity? by lazy {
-        val principal = SecurityContextHolder.getContext().authentication.principal as String
         var user: UserEntity? = null
-        if (SecurityContextHolder.getContext().authentication.isAuthenticated) {
-            user = userRepository.findByName(principal)
+        val principal = SecurityContextHolder.getContext().authentication.principal
+        if (principal is User) {
+            user = userRepository.findByName(principal.username)
         }
         if (user == null) {
             throw ForbiddenException()

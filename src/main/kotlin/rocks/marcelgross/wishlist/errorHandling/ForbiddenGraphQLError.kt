@@ -6,22 +6,22 @@ import graphql.GraphQLError
 import graphql.language.SourceLocation
 
 class ForbiddenGraphQLError(
-    private val exceptionWhileDataFetching: ExceptionWhileDataFetching
+    private val exception: ExceptionWhileDataFetching
 ) : GraphQLError {
 
     override fun getMessage(): String {
-        return "Forbidden access to ${exceptionWhileDataFetching.path}"
+        return "Forbidden access to ${exception.path}"
     }
 
     override fun getLocations(): MutableList<SourceLocation> {
-        return exceptionWhileDataFetching.locations
-    }
-
-    override fun getErrorType(): ErrorClassification? {
-        return null
+        return exception.locations
     }
 
     override fun getPath(): MutableList<Any>? {
+        return exception.path
+    }
+
+    override fun getErrorType(): ErrorClassification? {
         return null
     }
 }

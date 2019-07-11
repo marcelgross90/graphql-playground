@@ -19,7 +19,7 @@ class SecurityConfig(val userRepository: UserRepository) : WebSecurityConfigurer
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
         val authentication = auth.inMemoryAuthentication()
         userRepository.findAll().forEach {
-            val roles: Array<String> = if (it.name.startsWith("user")) arrayOf("USER") else arrayOf("ADMIN", "USER")
+            val roles: Array<String> = if (it.name.startsWith("name")) arrayOf("USER") else arrayOf("ADMIN", "USER")
             authentication.withUser(it.name)
                 .password("{noop}${it.name}")
                 .roles(*roles)
